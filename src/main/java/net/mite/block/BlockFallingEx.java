@@ -66,6 +66,7 @@ public class BlockFallingEx extends Block {
 
                 if (blockpos.getY() > 0) {
                     worldIn.setBlockState(blockpos.up(), state); //Forge: Fix loss of state information during world gen.
+                    worldIn.scheduleUpdate(blockpos,this,this.tickRate(worldIn));
                 }
             }
         }
