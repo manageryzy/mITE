@@ -1,6 +1,17 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockOre.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockOre.java
-@@ -78,34 +78,39 @@
+@@ -13,8 +13,9 @@
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.util.math.MathHelper;
+ import net.minecraft.world.World;
++import net.mite.block.BlockFallingEx;
+ 
+-public class BlockOre extends Block
++public class BlockOre extends BlockFallingEx
+ {
+     public BlockOre()
+     {
+@@ -78,34 +79,39 @@
      public void func_180653_a(World p_180653_1_, BlockPos p_180653_2_, IBlockState p_180653_3_, float p_180653_4_, int p_180653_5_)
      {
          super.func_180653_a(p_180653_1_, p_180653_2_, p_180653_3_, p_180653_4_, p_180653_5_);

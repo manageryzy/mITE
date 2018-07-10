@@ -1,0 +1,36 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockAnvil.java
++++ ../src-work/minecraft/net/minecraft/block/BlockAnvil.java
+@@ -29,10 +29,11 @@
+ import net.minecraft.world.World;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import net.mite.block.BlockFallingEx;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+-public class BlockAnvil extends BlockFalling
++public class BlockAnvil extends BlockFallingEx
+ {
+     public static final PropertyDirection field_176506_a = BlockHorizontal.field_185512_D;
+     public static final PropertyInteger field_176505_b = PropertyInteger.func_177719_a("damage", 0, 2);
+@@ -115,17 +116,17 @@
+         p_149666_2_.add(new ItemStack(this, 1, 2));
+     }
+ 
+-    protected void func_149829_a(EntityFallingBlock p_149829_1_)
++    protected void onStartFalling(EntityFallingBlock p_149829_1_)
+     {
+         p_149829_1_.func_145806_a(true);
+     }
+ 
+-    public void func_176502_a_(World p_176502_1_, BlockPos p_176502_2_, IBlockState p_176502_3_, IBlockState p_176502_4_)
++    public void onEndFalling(World p_176502_1_, BlockPos p_176502_2_, IBlockState p_176502_3_, IBlockState p_176502_4_)
+     {
+         p_176502_1_.func_175718_b(1031, p_176502_2_, 0);
+     }
+ 
+-    public void func_190974_b(World p_190974_1_, BlockPos p_190974_2_)
++    public void onBroken(World p_190974_1_, BlockPos p_190974_2_)
+     {
+         p_190974_1_.func_175718_b(1029, p_190974_2_, 0);
+     }

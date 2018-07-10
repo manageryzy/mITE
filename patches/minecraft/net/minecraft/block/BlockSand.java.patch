@@ -1,0 +1,22 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockSand.java
++++ ../src-work/minecraft/net/minecraft/block/BlockSand.java
+@@ -13,8 +13,9 @@
+ import net.minecraft.world.IBlockAccess;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import net.mite.block.BlockFallingEx;
+ 
+-public class BlockSand extends BlockFalling
++public class BlockSand extends BlockFallingEx
+ {
+     public static final PropertyEnum<BlockSand.EnumType> field_176504_a = PropertyEnum.<BlockSand.EnumType>func_177709_a("variant", BlockSand.EnumType.class);
+ 
+@@ -57,7 +58,7 @@
+     }
+ 
+     @SideOnly(Side.CLIENT)
+-    public int func_189876_x(IBlockState p_189876_1_)
++    public int getDustColor(IBlockState p_189876_1_)
+     {
+         BlockSand.EnumType blocksand$enumtype = (BlockSand.EnumType)p_189876_1_.func_177229_b(field_176504_a);
+         return blocksand$enumtype.func_189865_a();

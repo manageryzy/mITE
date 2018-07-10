@@ -1,11 +1,13 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockDirt.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockDirt.java
-@@ -16,7 +16,7 @@
+@@ -15,8 +15,9 @@
+ import net.minecraft.util.math.BlockPos;
  import net.minecraft.world.IBlockAccess;
  import net.minecraft.world.World;
++import net.mite.block.BlockFallingEx;
  
 -public class BlockDirt extends Block
-+public class BlockDirt extends BlockFalling
++public class BlockDirt extends BlockFallingEx
  {
      public static final PropertyEnum<BlockDirt.DirtType> field_176386_a = PropertyEnum.<BlockDirt.DirtType>func_177709_a("variant", BlockDirt.DirtType.class);
      public static final PropertyBool field_176385_b = PropertyBool.func_177716_a("snowy");

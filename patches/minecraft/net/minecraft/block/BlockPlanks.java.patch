@@ -1,0 +1,13 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockPlanks.java
++++ ../src-work/minecraft/net/minecraft/block/BlockPlanks.java
+@@ -12,8 +12,9 @@
+ import net.minecraft.util.NonNullList;
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.IBlockAccess;
++import net.mite.block.BlockFallingEx;
+ 
+-public class BlockPlanks extends Block
++public class BlockPlanks extends BlockFallingEx
+ {
+     public static final PropertyEnum<BlockPlanks.EnumType> field_176383_a = PropertyEnum.<BlockPlanks.EnumType>func_177709_a("variant", BlockPlanks.EnumType.class);
+ 

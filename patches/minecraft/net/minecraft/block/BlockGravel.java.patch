@@ -1,0 +1,22 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockGravel.java
++++ ../src-work/minecraft/net/minecraft/block/BlockGravel.java
+@@ -9,8 +9,9 @@
+ import net.minecraft.world.IBlockAccess;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import net.mite.block.BlockFallingEx;
+ 
+-public class BlockGravel extends BlockFalling
++public class BlockGravel extends BlockFallingEx
+ {
+     public Item func_180660_a(IBlockState p_180660_1_, Random p_180660_2_, int p_180660_3_)
+     {
+@@ -28,7 +29,7 @@
+     }
+ 
+     @SideOnly(Side.CLIENT)
+-    public int func_189876_x(IBlockState p_189876_1_)
++    public int getDustColor(IBlockState p_189876_1_)
+     {
+         return -8356741;
+     }

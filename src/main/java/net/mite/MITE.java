@@ -4,8 +4,10 @@ import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -19,6 +21,16 @@ public class MITE {
 
     private static Logger logger;
 
+    private static MITE instance = null;
+
+    @Mod.InstanceFactory
+    public MITE getInstance(){
+        if(instance == null)
+            instance = new MITE();
+
+        return instance;
+    }
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -31,4 +43,16 @@ public class MITE {
         // some example code
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event){
+
+    }
+
+    @EventHandler
+    public void serverStartingEvent(FMLServerStartingEvent event){
+
+    }
+
+
 }

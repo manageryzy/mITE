@@ -1,6 +1,14 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockFalling.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockFalling.java
-@@ -47,7 +47,7 @@
+@@ -12,6 +12,7 @@
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
++@Deprecated
+ public class BlockFalling extends Block
+ {
+     public static boolean field_149832_M;
+@@ -47,7 +48,7 @@
  
      private void func_176503_e(World p_176503_1_, BlockPos p_176503_2_)
      {
@@ -9,7 +17,7 @@
          {
              int i = 32;
  
-@@ -62,17 +62,18 @@
+@@ -62,17 +63,18 @@
              }
              else
              {
