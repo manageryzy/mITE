@@ -1,6 +1,6 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockOre.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockOre.java
-@@ -13,8 +13,9 @@
+@@ -13,18 +13,21 @@
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.util.math.MathHelper;
  import net.minecraft.world.World;
@@ -11,7 +11,19 @@
  {
      public BlockOre()
      {
-@@ -78,34 +79,39 @@
+         this(Material.field_151576_e.func_151565_r());
++        this.fallingDistHor = 1;
+     }
+ 
+     public BlockOre(MapColor p_i46390_1_)
+     {
+         super(Material.field_151576_e, p_i46390_1_);
+         this.func_149647_a(CreativeTabs.field_78030_b);
++        this.fallingDistHor = 1;
+     }
+ 
+     public Item func_180660_a(IBlockState p_180660_1_, Random p_180660_2_, int p_180660_3_)
+@@ -78,34 +81,39 @@
      public void func_180653_a(World p_180653_1_, BlockPos p_180653_2_, IBlockState p_180653_3_, float p_180653_4_, int p_180653_5_)
      {
          super.func_180653_a(p_180653_1_, p_180653_2_, p_180653_3_, p_180653_4_, p_180653_5_);

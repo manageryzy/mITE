@@ -11,9 +11,11 @@
  {
      public static final PropertyEnum<BlockSand.EnumType> field_176504_a = PropertyEnum.<BlockSand.EnumType>func_177709_a("variant", BlockSand.EnumType.class);
  
-@@ -57,7 +58,7 @@
+@@ -56,8 +57,9 @@
+         return new BlockStateContainer(this, new IProperty[] {field_176504_a});
      }
  
++    @Override
      @SideOnly(Side.CLIENT)
 -    public int func_189876_x(IBlockState p_189876_1_)
 +    public int getDustColor(IBlockState p_189876_1_)
