@@ -15,7 +15,7 @@
          super(Material.field_151578_c);
          this.func_180632_j(this.field_176227_L.func_177621_b().func_177226_a(field_176386_a, BlockDirt.DirtType.DIRT).func_177226_a(field_176385_b, Boolean.valueOf(false)));
          this.func_149647_a(CreativeTabs.field_78030_b);
-+        this.fallingDistVec = 1;
++        this.fallingDistVec = 3;
      }
  
      public MapColor func_180659_g(IBlockState p_180659_1_, IBlockAccess p_180659_2_, BlockPos p_180659_3_)

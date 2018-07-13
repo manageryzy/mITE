@@ -11,7 +11,7 @@
  {
 +    BlockGravel(){
 +        super();
-+        this.fallingDistVec = 1;
++        this.fallingDistVec = 2;
 +    }
 +
      public Item func_180660_a(IBlockState p_180660_1_, Random p_180660_2_, int p_180660_3_)

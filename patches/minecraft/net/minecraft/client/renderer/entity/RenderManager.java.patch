@@ -1,6 +1,33 @@
 --- ../src-base/minecraft/net/minecraft/client/renderer/entity/RenderManager.java
 +++ ../src-work/minecraft/net/minecraft/client/renderer/entity/RenderManager.java
-@@ -227,8 +227,13 @@
+@@ -4,7 +4,6 @@
+ import java.util.Map;
+ import javax.annotation.Nullable;
+ import net.minecraft.block.Block;
+-import net.minecraft.block.BlockBed;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.client.Minecraft;
+ import net.minecraft.client.entity.AbstractClientPlayer;
+@@ -34,7 +33,7 @@
+ import net.minecraft.entity.item.EntityEnderEye;
+ import net.minecraft.entity.item.EntityEnderPearl;
+ import net.minecraft.entity.item.EntityExpBottle;
+-import net.minecraft.entity.item.EntityFallingBlock;
++import net.mite.entity.EntityFallingBlock;
+ import net.minecraft.entity.item.EntityFireworkRocket;
+ import net.minecraft.entity.item.EntityItem;
+ import net.minecraft.entity.item.EntityItemFrame;
+@@ -104,9 +103,7 @@
+ import net.minecraft.entity.projectile.EntitySpectralArrow;
+ import net.minecraft.entity.projectile.EntityTippedArrow;
+ import net.minecraft.entity.projectile.EntityWitherSkull;
+-import net.minecraft.init.Blocks;
+ import net.minecraft.init.Items;
+-import net.minecraft.util.EnumFacing;
+ import net.minecraft.util.ReportedException;
+ import net.minecraft.util.math.AxisAlignedBB;
+ import net.minecraft.util.math.BlockPos;
+@@ -227,8 +224,13 @@
          this.field_178637_m = new RenderPlayer(this);
          this.field_178636_l.put("default", this.field_178637_m);
          this.field_178636_l.put("slim", new RenderPlayer(this, true));
@@ -14,7 +41,7 @@
      public void func_178628_a(double p_178628_1_, double p_178628_3_, double p_178628_5_)
      {
          this.field_78725_b = p_178628_1_;
-@@ -277,9 +282,9 @@
+@@ -277,9 +279,9 @@
              IBlockState iblockstate = p_180597_1_.func_180495_p(new BlockPos(p_180597_3_));
              Block block = iblockstate.func_177230_c();
  

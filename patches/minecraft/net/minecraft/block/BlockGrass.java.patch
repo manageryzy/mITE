@@ -15,7 +15,7 @@
          this.func_180632_j(this.field_176227_L.func_177621_b().func_177226_a(field_176498_a, Boolean.valueOf(false)));
          this.func_149675_a(true);
          this.func_149647_a(CreativeTabs.field_78030_b);
-+        this.fallingDistVec = 1;
++        this.fallingDistVec = 3;
      }
  
      public IBlockState func_176221_a(IBlockState p_176221_1_, IBlockAccess p_176221_2_, BlockPos p_176221_3_)

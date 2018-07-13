@@ -1,5 +1,14 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockAnvil.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockAnvil.java
+@@ -9,7 +9,7 @@
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.creativetab.CreativeTabs;
+ import net.minecraft.entity.EntityLivingBase;
+-import net.minecraft.entity.item.EntityFallingBlock;
++import net.mite.entity.EntityFallingBlock;
+ import net.minecraft.entity.player.EntityPlayer;
+ import net.minecraft.entity.player.InventoryPlayer;
+ import net.minecraft.init.Blocks;
 @@ -29,10 +29,11 @@
  import net.minecraft.world.World;
  import net.minecraftforge.fml.relauncher.Side;
@@ -19,9 +28,10 @@
  
 -    protected void func_149829_a(EntityFallingBlock p_149829_1_)
 +    @Override
-+    protected void onStartFalling(EntityFallingBlock p_149829_1_)
++    protected void onStartFalling(EntityFallingBlock fallingEntity)
      {
-         p_149829_1_.func_145806_a(true);
+-        p_149829_1_.func_145806_a(true);
++        fallingEntity.setHurtEntities(true);
      }
  
 -    public void func_176502_a_(World p_176502_1_, BlockPos p_176502_2_, IBlockState p_176502_3_, IBlockState p_176502_4_)

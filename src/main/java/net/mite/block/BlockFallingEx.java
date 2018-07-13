@@ -5,7 +5,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.item.EntityFallingBlock;
+import net.mite.entity.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -52,28 +52,81 @@ public class BlockFallingEx extends Block {
         }
     }
 
+
+
     private void checkFallable(World worldIn, BlockPos pos) {
         if (fallingDistHor == 0 && fallingDistVec == 0) {
             checkFallingDirect(worldIn, pos);
-        } else if (fallingDistVec == 0) {
-            checkFallingHor(worldIn, pos);
-        } else {
-            checkFallingVec(worldIn, pos);
+        } else if(!fallInstantly){
+            if (fallingDistVec == 0) {
+                checkFallingHor(worldIn, pos);
+            } else {
+                checkFallingVec(worldIn, pos);
+            }
         }
     }
 
     private void checkFallingVec(World worldIn, BlockPos pos) {
         if (!worldIn.isRemote) {
 
+            if (!checkFallingVec(worldIn, pos, pos)) {
+                return;
+            }
+            if (!checkFallingVec(worldIn, pos, pos.east())) {
+                return;
+            }
+            if (!checkFallingVec(worldIn, pos, pos.south())) {
+                return;
+            }
+            if (!checkFallingVec(worldIn, pos, pos.west())) {
+                return;
+            }
+
+            checkFallingVec(worldIn, pos, pos.north());
         }
+    }
+
+    private boolean checkFallingVec(World worldIn, BlockPos pos, BlockPos p) {
+        boolean supported = false;
+        for (int i = 1; i < fallingDistVec + 1; ++i) {
+            if (p.down(i).getY() <= 0) {
+                supported = true;
+            }
+            if (!canFallThrough(worldIn.getBlockState(p.down(i)))) {
+                supported = true;
+            }
+        }
+
+        if (!supported) {
+            if ((!fallInstantly && worldIn.isAreaLoaded(pos.add(-32, -32, -32), pos.add(32, 32, 32)))) {
+                EntityFallingBlock entityfallingblock =
+                        new EntityFallingBlock(worldIn, (double) p.getX() + 0.5D, (double) p.getY(), (double) p.getZ() + 0.5D, pos, worldIn.getBlockState(pos));
+                this.onStartFalling(entityfallingblock);
+                worldIn.spawnEntity(entityfallingblock);
+            } else {
+                IBlockState state = worldIn.getBlockState(pos);
+                worldIn.setBlockToAir(pos);
+
+                for (BlockPos blockpos = p.down();
+                     blockpos.getY() > 0;
+                     blockpos = blockpos.down()) {
+                    if ((worldIn.isAirBlock(blockpos) || canFallThrough(worldIn.getBlockState(blockpos)))) {
+                        worldIn.setBlockState(blockpos.up(), state); //Forge: Fix loss of state information during world gen.
+                    }
+                }
+            }
+
+        }
+
+        return supported;
     }
 
     private void checkFallingHor(World worldIn, BlockPos pos) {
         if (!worldIn.isRemote) {
-//            IBlockState bs = worldIn.getBlockState(pos.up());
-//            if (bs.getBlock() == this) {
-//                return;
-//            }
+            IBlockState bs = worldIn.getBlockState(pos.up());
+            if (bs.getBlock() == this) {
+                return;
+            }
 
             //search support
             Map<BlockPos, Integer> dists = new HashMap<>(16);
