@@ -11,11 +11,12 @@
  {
      public static final PropertyEnum<EnumDyeColor> field_192426_a = PropertyEnum.<EnumDyeColor>func_177709_a("color", EnumDyeColor.class);
  
-@@ -27,7 +28,7 @@
+@@ -27,7 +28,8 @@
          this.func_149647_a(CreativeTabs.field_78030_b);
      }
  
 -    public void func_176502_a_(World p_176502_1_, BlockPos p_176502_2_, IBlockState p_176502_3_, IBlockState p_176502_4_)
++    @Override
 +    public void onEndFalling(World p_176502_1_, BlockPos p_176502_2_, IBlockState p_176502_3_, IBlockState p_176502_4_)
      {
          if (p_176502_4_.func_185904_a().func_76224_d())

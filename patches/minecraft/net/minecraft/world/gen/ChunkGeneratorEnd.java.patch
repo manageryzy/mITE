@@ -1,5 +1,14 @@
 --- ../src-base/minecraft/net/minecraft/world/gen/ChunkGeneratorEnd.java
 +++ ../src-work/minecraft/net/minecraft/world/gen/ChunkGeneratorEnd.java
+@@ -4,7 +4,7 @@
+ import java.util.Random;
+ import javax.annotation.Nullable;
+ import net.minecraft.block.BlockChorusFlower;
+-import net.minecraft.block.BlockFalling;
++import net.mite.block.BlockFallingEx;
+ import net.minecraft.block.material.Material;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.entity.EnumCreatureType;
 @@ -43,6 +43,9 @@
      double[] field_185967_f;
      double[] field_185968_g;
@@ -55,19 +64,23 @@
          if (p_185963_1_ == null)
          {
              p_185963_1_ = new double[p_185963_5_ * p_185963_6_ * p_185963_7_];
-@@ -326,6 +346,7 @@
+@@ -325,7 +345,8 @@
+ 
      public void func_185931_b(int p_185931_1_, int p_185931_2_)
      {
-         BlockFalling.field_149832_M = true;
+-        BlockFalling.field_149832_M = true;
++        BlockFallingEx.fallInstantly = true;
 +        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.field_73230_p, this.field_73220_k, p_185931_1_, p_185931_2_, false);
          BlockPos blockpos = new BlockPos(p_185931_1_ * 16, 0, p_185931_2_ * 16);
  
          if (this.field_73229_q)
-@@ -394,6 +415,7 @@
+@@ -394,7 +415,8 @@
              }
          }
  
+-        BlockFalling.field_149832_M = false;
 +        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.field_73230_p, this.field_73220_k, p_185931_1_, p_185931_2_, false);
-         BlockFalling.field_149832_M = false;
++        BlockFallingEx.fallInstantly = false;
      }
  
+     public boolean func_185933_a(Chunk p_185933_1_, int p_185933_2_, int p_185933_3_)

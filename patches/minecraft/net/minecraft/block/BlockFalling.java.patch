@@ -1,5 +1,14 @@
 --- ../src-base/minecraft/net/minecraft/block/BlockFalling.java
 +++ ../src-work/minecraft/net/minecraft/block/BlockFalling.java
+@@ -4,7 +4,7 @@
+ import net.minecraft.block.material.Material;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.creativetab.CreativeTabs;
+-import net.minecraft.entity.item.EntityFallingBlock;
++import net.mite.entity.EntityFallingBlock;
+ import net.minecraft.init.Blocks;
+ import net.minecraft.util.EnumParticleTypes;
+ import net.minecraft.util.math.BlockPos;
 @@ -12,6 +12,7 @@
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +26,14 @@
          {
              int i = 32;
  
-@@ -62,17 +63,18 @@
+@@ -56,29 +57,30 @@
+                 if (!p_176503_1_.field_72995_K)
+                 {
+                     EntityFallingBlock entityfallingblock = new EntityFallingBlock(p_176503_1_, (double)p_176503_2_.func_177958_n() + 0.5D, (double)p_176503_2_.func_177956_o(), (double)p_176503_2_.func_177952_p() + 0.5D, p_176503_1_.func_180495_p(p_176503_2_));
+-                    this.func_149829_a(entityfallingblock);
++                    this.onStartFalling(entityfallingblock);
+                     p_176503_1_.func_72838_d(entityfallingblock);
+                 }
              }
              else
              {
@@ -38,3 +54,10 @@
                  }
              }
          }
+     }
+ 
+-    protected void func_149829_a(EntityFallingBlock p_149829_1_)
++    protected void onStartFalling(EntityFallingBlock fallingEntity)
+     {
+     }
+ 

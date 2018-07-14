@@ -1,5 +1,21 @@
 --- ../src-base/minecraft/net/minecraft/world/gen/ChunkGeneratorOverworld.java
 +++ ../src-work/minecraft/net/minecraft/world/gen/ChunkGeneratorOverworld.java
+@@ -3,7 +3,6 @@
+ import java.util.List;
+ import java.util.Random;
+ import javax.annotation.Nullable;
+-import net.minecraft.block.BlockFalling;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.entity.EnumCreatureType;
+ import net.minecraft.init.Biomes;
+@@ -25,6 +24,7 @@
+ import net.minecraft.world.gen.structure.MapGenVillage;
+ import net.minecraft.world.gen.structure.StructureOceanMonument;
+ import net.minecraft.world.gen.structure.WoodlandMansion;
++import net.mite.block.BlockFallingEx;
+ 
+ public class ChunkGeneratorOverworld implements IChunkGenerator
+ {
 @@ -61,6 +61,16 @@
  
      public ChunkGeneratorOverworld(World p_i46668_1_, long p_i46668_2_, boolean p_i46668_4_, String p_i46668_5_)
@@ -43,6 +59,15 @@
          double d0 = 0.03125D;
          this.field_186002_u = this.field_185994_m.func_151599_a(this.field_186002_u, (double)(p_185977_1_ * 16), (double)(p_185977_2_ * 16), 16, 16, 0.0625D, 0.0625D, 1.0D);
  
+@@ -358,7 +380,7 @@
+ 
+     public void func_185931_b(int p_185931_1_, int p_185931_2_)
+     {
+-        BlockFalling.field_149832_M = true;
++        BlockFallingEx.fallInstantly = true;
+         int i = p_185931_1_ * 16;
+         int j = p_185931_2_ * 16;
+         BlockPos blockpos = new BlockPos(i, 0, j);
 @@ -370,6 +392,8 @@
          boolean flag = false;
          ChunkPos chunkpos = new ChunkPos(p_185931_1_, p_185931_2_);
@@ -89,14 +114,16 @@
          for (int k2 = 0; k2 < 16; ++k2)
          {
              for (int j3 = 0; j3 < 16; ++j3)
-@@ -456,7 +486,10 @@
+@@ -456,8 +486,11 @@
                  }
              }
          }
 +        }//Forge: End ICE
  
+-        BlockFalling.field_149832_M = false;
 +        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.field_185995_n, this.field_185990_i, p_185931_1_, p_185931_2_, flag);
 +
-         BlockFalling.field_149832_M = false;
++        BlockFallingEx.fallInstantly = false;
      }
  
+     public boolean func_185933_a(Chunk p_185933_1_, int p_185933_2_, int p_185933_3_)

@@ -1,5 +1,21 @@
 --- ../src-base/minecraft/net/minecraft/world/gen/ChunkGeneratorHell.java
 +++ ../src-work/minecraft/net/minecraft/world/gen/ChunkGeneratorHell.java
+@@ -3,7 +3,6 @@
+ import java.util.List;
+ import java.util.Random;
+ import javax.annotation.Nullable;
+-import net.minecraft.block.BlockFalling;
+ import net.minecraft.block.material.Material;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.block.state.pattern.BlockMatcher;
+@@ -24,6 +23,7 @@
+ import net.minecraft.world.gen.feature.WorldGenMinable;
+ import net.minecraft.world.gen.feature.WorldGenerator;
+ import net.minecraft.world.gen.structure.MapGenNetherBridge;
++import net.mite.block.BlockFallingEx;
+ 
+ public class ChunkGeneratorHell implements IChunkGenerator
+ {
 @@ -77,6 +77,19 @@
          this.field_185946_g = new NoiseGeneratorOctaves(this.field_185954_p, 10);
          this.field_185947_h = new NoiseGeneratorOctaves(this.field_185954_p, 16);
@@ -39,10 +55,12 @@
          double d0 = 684.412D;
          double d1 = 2053.236D;
          this.field_73168_g = this.field_185946_g.func_76304_a(this.field_73168_g, p_185938_2_, p_185938_3_, p_185938_4_, p_185938_5_, 1, p_185938_7_, 1.0D, 0.0D, 1.0D);
-@@ -358,6 +376,7 @@
+@@ -357,7 +375,8 @@
+ 
      public void func_185931_b(int p_185931_1_, int p_185931_2_)
      {
-         BlockFalling.field_149832_M = true;
+-        BlockFalling.field_149832_M = true;
++        BlockFallingEx.fallInstantly = true;
 +        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(true, this, this.field_185952_n, this.field_185954_p, p_185931_1_, p_185931_2_, false);
          int i = p_185931_1_ * 16;
          int j = p_185931_2_ * 16;
@@ -93,7 +111,7 @@
          for (int l1 = 0; l1 < 16; ++l1)
          {
              this.field_177467_w.func_180709_b(this.field_185952_n, this.field_185954_p, blockpos.func_177982_a(this.field_185954_p.nextInt(16), this.field_185954_p.nextInt(108) + 10, this.field_185954_p.nextInt(16)));
-@@ -402,17 +434,23 @@
+@@ -402,18 +434,24 @@
  
          int i2 = this.field_185952_n.func_181545_F() / 2 + 1;
  
@@ -112,9 +130,11 @@
          }
  
          biome.func_180624_a(this.field_185952_n, this.field_185954_p, new BlockPos(i, 0, j));
+-        BlockFalling.field_149832_M = false;
 +
 +        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.terraingen.DecorateBiomeEvent.Post(this.field_185952_n, this.field_185954_p, blockpos));
 +
-         BlockFalling.field_149832_M = false;
++        BlockFallingEx.fallInstantly = false;
      }
  
+     public boolean func_185933_a(Chunk p_185933_1_, int p_185933_2_, int p_185933_3_)
