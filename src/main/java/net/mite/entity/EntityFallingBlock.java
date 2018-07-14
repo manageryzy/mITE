@@ -152,9 +152,9 @@ public class EntityFallingBlock extends Entity {
 
                 if (!this.onGround && !flag1) {
                     if (this.fallTime > 100 && !this.world.isRemote && (blockpos1.getY() < 1 || blockpos1.getY() > 256) || this.fallTime > 600) {
-                        if (this.shouldDropItem && this.world.getGameRules().getBoolean("doEntityDrops")) {
-                            this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
-                        }
+//                        if (this.shouldDropItem && this.world.getGameRules().getBoolean("doEntityDrops")) {
+//                            this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
+//                        }
 
                         this.setDead();
                     }
@@ -200,8 +200,32 @@ public class EntityFallingBlock extends Entity {
                                         tileentity.markDirty();
                                     }
                                 }
-                            } else if (this.shouldDropItem && this.world.getGameRules().getBoolean("doEntityDrops")) {
-                                this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
+                            } else  {
+                                IBlockState bs = world.getBlockState(blockpos1);
+                                if(!bs.isFullBlock()) {
+                                    this.world.setBlockState(blockpos1, this.fallTile, 3);
+                                }
+
+                                if (this.tileEntityData != null && block.hasTileEntity(this.fallTile)) {
+                                    TileEntity tileentity = this.world.getTileEntity(blockpos1);
+
+                                    if (tileentity != null) {
+                                        NBTTagCompound nbttagcompound = tileentity.writeToNBT(new NBTTagCompound());
+
+                                        for (String s : this.tileEntityData.getKeySet()) {
+                                            NBTBase nbtbase = this.tileEntityData.getTag(s);
+
+                                            if (!"x".equals(s) && !"y".equals(s) && !"z".equals(s)) {
+                                                nbttagcompound.setTag(s, nbtbase.copy());
+                                            }
+                                        }
+
+                                        tileentity.readFromNBT(nbttagcompound);
+                                        tileentity.markDirty();
+                                    }
+                                }
+
+//                                this.entityDropItem(new ItemStack(block, 1, block.damageDropped(this.fallTile)), 0.0F);
                             }
                         } else if (block instanceof BlockFallingEx) {
                             ((BlockFallingEx) block).onBroken(this.world, blockpos1);
