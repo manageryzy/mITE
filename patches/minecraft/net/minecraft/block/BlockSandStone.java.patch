@@ -1,0 +1,21 @@
+--- ../src-base/minecraft/net/minecraft/block/BlockSandStone.java
++++ ../src-work/minecraft/net/minecraft/block/BlockSandStone.java
+@@ -12,8 +12,9 @@
+ import net.minecraft.util.NonNullList;
+ import net.minecraft.util.math.BlockPos;
+ import net.minecraft.world.IBlockAccess;
++import net.mite.block.BlockFallingEx;
+ 
+-public class BlockSandStone extends Block
++public class BlockSandStone extends BlockFallingEx
+ {
+     public static final PropertyEnum<BlockSandStone.EnumType> field_176297_a = PropertyEnum.<BlockSandStone.EnumType>func_177709_a("type", BlockSandStone.EnumType.class);
+ 
+@@ -22,6 +23,7 @@
+         super(Material.field_151576_e);
+         this.func_180632_j(this.field_176227_L.func_177621_b().func_177226_a(field_176297_a, BlockSandStone.EnumType.DEFAULT));
+         this.func_149647_a(CreativeTabs.field_78030_b);
++        this.fallingDistHor = 3;
+     }
+ 
+     public int func_180651_a(IBlockState p_180651_1_)

@@ -1,0 +1,30 @@
+--- ../src-base/minecraft/net/minecraft/client/particle/ParticleFallingDust.java
++++ ../src-work/minecraft/net/minecraft/client/particle/ParticleFallingDust.java
+@@ -2,7 +2,6 @@
+ 
+ import javax.annotation.Nullable;
+ import net.minecraft.block.Block;
+-import net.minecraft.block.BlockFalling;
+ import net.minecraft.block.state.IBlockState;
+ import net.minecraft.client.Minecraft;
+ import net.minecraft.client.renderer.BufferBuilder;
+@@ -14,6 +13,7 @@
+ import net.minecraft.world.World;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import net.mite.block.BlockFallingEx;
+ 
+ @SideOnly(Side.CLIENT)
+ public class ParticleFallingDust extends Particle
+@@ -89,9 +89,9 @@
+                 {
+                     int i = Minecraft.func_71410_x().func_184125_al().func_189991_a(iblockstate, p_178902_2_, new BlockPos(p_178902_3_, p_178902_5_, p_178902_7_));
+ 
+-                    if (iblockstate.func_177230_c() instanceof BlockFalling)
++                    if (iblockstate.func_177230_c() instanceof BlockFallingEx)
+                     {
+-                        i = ((BlockFalling)iblockstate.func_177230_c()).func_189876_x(iblockstate);
++                        i = ((BlockFallingEx)iblockstate.func_177230_c()).getDustColor(iblockstate);
+                     }
+ 
+                     float f = (float)(i >> 16 & 255) / 255.0F;
