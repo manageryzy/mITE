@@ -42,6 +42,8 @@ public class MITE {
     {
         // some example code
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+
     }
 
     @EventHandler

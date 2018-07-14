@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
@@ -42,7 +43,6 @@ public class EntityFallingBlock extends Entity {
     private int fallHurtMax = 40;
     private float fallHurtAmount = 2.0F;
     public NBTTagCompound tileEntityData;
-    private BlockPos ori;
     protected static final DataParameter<BlockPos> ORIGIN = EntityDataManager.<BlockPos>createKey(EntityFallingBlock.class, DataSerializers.BLOCK_POS);
 
     public EntityFallingBlock(World worldIn) {
@@ -61,7 +61,6 @@ public class EntityFallingBlock extends Entity {
         this.prevPosX = x;
         this.prevPosY = y;
         this.prevPosZ = z;
-        this.ori = new BlockPos(x,y,z);
         this.setOrigin(new BlockPos(this));
     }
 
@@ -77,8 +76,7 @@ public class EntityFallingBlock extends Entity {
         this.prevPosX = x;
         this.prevPosY = y;
         this.prevPosZ = z;
-        this.ori = ori;
-        this.setOrigin(new BlockPos(this));
+        this.setOrigin(new BlockPos(ori));
     }
 
     @Override
@@ -90,7 +88,6 @@ public class EntityFallingBlock extends Entity {
         this.dataManager.set(ORIGIN, p_184530_1_);
     }
 
-    @SideOnly(Side.CLIENT)
     public BlockPos getOrigin() {
         return (BlockPos) this.dataManager.get(ORIGIN);
     }
@@ -122,7 +119,7 @@ public class EntityFallingBlock extends Entity {
             this.prevPosZ = this.posZ;
 
             if (this.fallTime++ == 0) {
-                BlockPos blockpos = ori;
+                BlockPos blockpos = getOrigin();
 
                 if (this.world.getBlockState(blockpos).getBlock() == block) {
                     this.world.setBlockToAir(blockpos);

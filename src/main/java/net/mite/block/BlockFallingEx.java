@@ -1,18 +1,26 @@
 package net.mite.block;
 
+import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.mite.entity.EntityFallingBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.mite.entity.EntityFallingBlock;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -53,11 +61,29 @@ public class BlockFallingEx extends Block {
     }
 
 
-
     private void checkFallable(World worldIn, BlockPos pos) {
+        if (worldIn.getEntities(EntityFallingBlock.class, new Predicate<EntityFallingBlock>() {
+            @Override
+            public boolean apply(@Nullable EntityFallingBlock input) {
+                return true;
+            }
+
+            @Override
+            public boolean equals(@Nullable Object object) {
+                return false;
+            }
+        }).size() > 128) {
+            return;
+        }
+
+        checkFallableDirect(worldIn, pos);
+    }
+
+    private void checkFallableDirect(World worldIn, BlockPos pos) {
+
         if (fallingDistHor == 0 && fallingDistVec == 0) {
             checkFallingDirect(worldIn, pos);
-        } else if(!fallInstantly){
+        } else if (!fallInstantly) {
             if (fallingDistVec == 0) {
                 checkFallingHor(worldIn, pos);
             } else {
@@ -69,26 +95,30 @@ public class BlockFallingEx extends Block {
     private void checkFallingVec(World worldIn, BlockPos pos) {
         if (!worldIn.isRemote) {
 
-            if (!checkFallingVec(worldIn, pos, pos)) {
+            if (!checkFallingVec(worldIn, pos, pos, 1)) {
                 return;
             }
-            if (!checkFallingVec(worldIn, pos, pos.east())) {
+            if (!checkFallingVec(worldIn, pos, pos.east(), fallingDistVec)) {
                 return;
             }
-            if (!checkFallingVec(worldIn, pos, pos.south())) {
+            if (!checkFallingVec(worldIn, pos, pos.south(), fallingDistVec)) {
                 return;
             }
-            if (!checkFallingVec(worldIn, pos, pos.west())) {
+            if (!checkFallingVec(worldIn, pos, pos.west(), fallingDistVec)) {
                 return;
             }
 
-            checkFallingVec(worldIn, pos, pos.north());
+            checkFallingVec(worldIn, pos, pos.north(), fallingDistVec);
         }
     }
 
-    private boolean checkFallingVec(World worldIn, BlockPos pos, BlockPos p) {
+    private boolean checkFallingVec(World worldIn, BlockPos pos, BlockPos p, int dist) {
+        if(!worldIn.isBlockLoaded(pos)) {
+            return true;
+        }
+
         boolean supported = false;
-        for (int i = 1; i < fallingDistVec + 1; ++i) {
+        for (int i = 1; i < dist + 1; ++i) {
             if (p.down(i).getY() <= 0) {
                 supported = true;
             }
@@ -168,6 +198,10 @@ public class BlockFallingEx extends Block {
             return;
         }
 
+        if(!worldIn.isBlockLoaded(pos)) {
+            return;
+        }
+
         if (dists.containsKey(pos)) {
             if (dists.get(pos) <= currentDist) {
                 return;
@@ -208,6 +242,27 @@ public class BlockFallingEx extends Block {
 
             }
         }
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ)) {
+            worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+        super.onEntityWalk(worldIn, pos, entityIn);
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        checkFallableDirect(worldIn, pos);
     }
 
     protected void onStartFalling(EntityFallingBlock fallingEntity) {
